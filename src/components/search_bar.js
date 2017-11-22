@@ -4,7 +4,7 @@ class SearchBar extends Component {
 
   constructor(props) {
     super(props);
-
+    // initialise state
     this.state = { term: '' };
   }
 
@@ -14,13 +14,16 @@ class SearchBar extends Component {
       <div>
         <input
           placeholder = { 'search' }
+
+          // write an event handler for input going into the searchbar
+          onChange = { (event) => this.setState({term: event.target.value})}
+
+          // when the value of a component is provided by state, the component becomes a 'controlled component'
           value = { this.state.term }
-          onChange = { (event) => this.setState({term: event.target.value})} />
+        />
       </div>
     );
   }
-  // write an event handler for input going into the searchbar
-  // the ^event^ argument is the javascript DOM event object. This is standard JS
 
 };
 
