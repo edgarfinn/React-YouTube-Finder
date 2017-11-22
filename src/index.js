@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
+import _ from 'lodash';
 import SearchBar from './components/search_bar';
 import KEYs from './../keys.js';
 import VideoList from './components/video_list';
@@ -19,24 +20,30 @@ class App extends Component {
      };
 
     // whenever constructor is run, a YTSearch API call is executed
-    YTSearch({ key: API_KEY, term: 'surf boards'}, (videos) => {
+    this.videoSearch('surfboards');
+  }
+
+  videoSearch(term) {
+    YTSearch({ key: API_KEY, term: term}, (videos) => {
       // update the state with the API request's response data
       this.setState({
         videos: videos,
         selectedVideo: videos[0]
       });
-    // Since key and value are identical,
-    // you could also just use 'this.setState({ videos })''
-    // This is an ES6 feature for key and value terms which are identical
-      }
-    );
+      // Since key and value are identical,
+      // you could also just use 'this.setState({ videos })''
+      // This is an ES6 feature for key and value terms which are identical
+    }
+  );
+
   }
 
   render() {
+    const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300);
     return (
       <div>
-
-        <SearchBar />
+        {/* invoke SearchBar and pass videoSearch function */}
+        <SearchBar onSearchTermChange={term => videoSearch(term)}/>
         <VideoDetail video={this.state.selectedVideo} />
 
         {/* invoke an instance of VideoList,
