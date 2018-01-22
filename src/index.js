@@ -33,9 +33,7 @@ class App extends Component {
       // Since key and value are identical,
       // you could also just use 'this.setState({ videos })''
       // This is an ES6 feature for key and value terms which are identical
-    }
-  );
-
+    });
   }
 
   render() {
